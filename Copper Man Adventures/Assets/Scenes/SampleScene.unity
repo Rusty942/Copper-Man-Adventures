@@ -377,7 +377,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: -1.6965201, y: 2.189697}
-  m_ConnectedAnchor: {x: 2.2854125, y: -10.704158}
+  m_ConnectedAnchor: {x: 2.2854111, y: -10.704158}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -516,7 +516,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: -0.94375956, y: 2.6207955}
-  m_ConnectedAnchor: {x: 2.808985, y: -3.5781658}
+  m_ConnectedAnchor: {x: 2.808987, y: -3.5781646}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -766,7 +766,7 @@ Transform:
   m_GameObject: {fileID: 769810151}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.3736151, y: 1.6616317, z: -0.0145138325}
+  m_LocalPosition: {x: 7.6, y: 1.6616317, z: -0.0145138325}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -815,7 +815,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: -5.292717, y: 1.2510549}
-  m_ConnectedAnchor: {x: -4.111763, y: -1.4317708}
+  m_ConnectedAnchor: {x: -4.1117616, y: -1.4317708}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -1014,7 +1014,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: -0.94375956, y: 2.6207955}
-  m_ConnectedAnchor: {x: 2.8921223, y: -3.5624666}
+  m_ConnectedAnchor: {x: 2.8921242, y: -3.5624657}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -1406,7 +1406,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: -2.28022, y: 3.9962206}
-  m_ConnectedAnchor: {x: -0.94496423, y: -9.012883}
+  m_ConnectedAnchor: {x: -0.9449627, y: -9.012883}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -1506,6 +1506,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a269ca8f81c2f9a4ea3b32b018472cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rightThigh: {fileID: 0}
+  rightCalf: {fileID: 0}
+  leftThigh: {fileID: 0}
+  leftCalf: {fileID: 0}
 --- !u!1 &1714388212
 GameObject:
   m_ObjectHideFlags: 0
@@ -1557,7 +1561,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: -5.292717, y: 1.2510549}
-  m_ConnectedAnchor: {x: 2.3400416, y: 0.5403232}
+  m_ConnectedAnchor: {x: 2.3400433, y: 0.5403232}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0

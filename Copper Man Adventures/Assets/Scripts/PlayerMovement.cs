@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public HingeJoint2D rightThigh;
+    public HingeJoint2D rightCalf;
+    public HingeJoint2D leftThigh;
+    public HingeJoint2D leftCalf;
+
+    private JointMotor2D rightThighMotorRef;
+    private JointMotor2D rightCalfMotorRef;
+    private JointMotor2D leftThighMotorRef;
+    private JointMotor2D leftCalfMotorRef;
+
     // Start is called before the first frame update
     void Start()
     {
