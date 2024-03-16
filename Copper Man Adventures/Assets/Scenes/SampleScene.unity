@@ -298,7 +298,6 @@ MonoBehaviour:
   leftThigh: {fileID: 159598646}
   hingeSpeed: 500
   boostForce: 500
-  boostParticlePrefab: {fileID: 7350259734122281187, guid: 9ae81511343ab3548b018157921f1b8b, type: 3}
 --- !u!1 &159552803
 GameObject:
   m_ObjectHideFlags: 0
