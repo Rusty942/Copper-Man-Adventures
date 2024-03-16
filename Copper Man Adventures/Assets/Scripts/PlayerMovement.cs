@@ -1,87 +1,55 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    //Initially get the player limbs
+    // Get the player limbs
     public HingeJoint2D rightThigh;
     public HingeJoint2D rightCalf;
     public HingeJoint2D leftThigh;
     public HingeJoint2D leftCalf;
 
-    //Refrence to player limb motors
+    // Set the speed the limbs move at
+    public float hingeSpeed = 40f;
+    public float acceleration = 10f;
+
+    // Reference to player limb motors
     private JointMotor2D rightThighMotorRef;
     private JointMotor2D rightCalfMotorRef;
     private JointMotor2D leftThighMotorRef;
     private JointMotor2D leftCalfMotorRef;
 
-    //Set the speed the limbs move at
-    public float hingeSpeed = 40;
-
-    // Start is called before the first frame update
     void Start()
     {
-        //Set the motors to the limb motors
+        // Set the motors to the limb motors
         rightThighMotorRef = rightThigh.motor;
         rightCalfMotorRef = rightCalf.motor;
         leftThighMotorRef = leftThigh.motor;
         leftCalfMotorRef = leftCalf.motor;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //Thigh controls
-        if (Input.GetKey(KeyCode.Q))
+        MoveLimb(rightThigh, KeyCode.Q, KeyCode.W);
+        MoveLimb(leftThigh, KeyCode.Q, KeyCode.W, -1f);
+        MoveLimb(rightCalf, KeyCode.E, KeyCode.R);
+        MoveLimb(leftCalf, KeyCode.E, KeyCode.R, -1f);
+    }
+
+    void MoveLimb(HingeJoint2D limb, KeyCode clockwiseKey, KeyCode anticlockwiseKey, float directionMultiplier = 1f)
+    {
+        JointMotor2D motor = limb.motor;
+        motor.motorSpeed = Mathf.MoveTowards(motor.motorSpeed, 0f, acceleration * Time.deltaTime);
+
+        if (Input.GetKey(clockwiseKey))
         {
-            rightThigh.useMotor = true;
-            leftThigh.useMotor = true;
-            rightThighMotorRef.motorSpeed = -hingeSpeed;
-            leftThighMotorRef.motorSpeed = hingeSpeed;
-            rightThigh.motor = rightThighMotorRef;
-            leftThigh.motor = leftThighMotorRef;
+            motor.motorSpeed = -hingeSpeed * directionMultiplier;
         }
-        else if (Input.GetKey(KeyCode.W))
+        else if (Input.GetKey(anticlockwiseKey))
         {
-            rightThigh.useMotor = true;
-            leftThigh.useMotor = true;
-            rightThighMotorRef.motorSpeed = hingeSpeed;
-            leftThighMotorRef.motorSpeed = -hingeSpeed;
-            rightThigh.motor = rightThighMotorRef;
-            leftThigh.motor = leftThighMotorRef;
-        }
-        else
-        {
-            rightThigh.useMotor =false;
-            leftThigh.useMotor = false;
+            motor.motorSpeed = hingeSpeed * directionMultiplier;
         }
 
-       
-        //Calf controls
-        if (Input.GetKey(KeyCode.E))
-        {
-            rightCalf.useMotor = true;
-            leftCalf.useMotor = true;
-            rightCalfMotorRef.motorSpeed = -hingeSpeed;
-            leftCalfMotorRef.motorSpeed = hingeSpeed;
-            rightCalf.motor = rightCalfMotorRef;
-            leftCalf.motor = leftCalfMotorRef;
-        }
-        else if (Input.GetKey(KeyCode.R))
-        {
-            rightCalf.useMotor = true;
-            leftCalf.useMotor = true;
-            rightCalfMotorRef.motorSpeed = hingeSpeed;
-            leftCalfMotorRef.motorSpeed = -hingeSpeed;
-            rightCalf.motor = rightCalfMotorRef;
-            leftCalf.motor = leftCalfMotorRef;
-        }
-        else
-        {
-            rightCalf.useMotor = false;
-            leftCalf.useMotor = false;
-        }
-
+        limb.motor = motor;
+        limb.useMotor = Mathf.Abs(motor.motorSpeed) > 0.01f;
     }
 }
