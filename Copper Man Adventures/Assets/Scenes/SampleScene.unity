@@ -298,6 +298,7 @@ MonoBehaviour:
   leftThigh: {fileID: 159598646}
   hingeSpeed: 500
   boostForce: 500
+  boostParticlePrefab: {fileID: 7350259734122281187, guid: 9ae81511343ab3548b018157921f1b8b, type: 3}
 --- !u!1 &159552803
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,11 +829,11 @@ Transform:
   m_GameObject: {fileID: 367297198}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -110.5, y: 67.8, z: 0}
+  m_LocalPosition: {x: 0, y: 72.9919, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1577960435}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &407614627
 GameObject:
@@ -2873,6 +2874,7 @@ Transform:
   - {fileID: 1775769746}
   - {fileID: 566247218}
   - {fileID: 1535604112}
+  - {fileID: 367297200}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1714388212
@@ -3315,4 +3317,3 @@ SceneRoots:
   - {fileID: 1749156070}
   - {fileID: 959537583}
   - {fileID: 1577960435}
-  - {fileID: 367297200}
