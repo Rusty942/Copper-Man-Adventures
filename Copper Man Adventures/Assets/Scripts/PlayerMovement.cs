@@ -4,84 +4,75 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    //Initially get the player limbs
+    // Initially get the player limbs
     public HingeJoint2D rightThigh;
-    public HingeJoint2D rightCalf;
     public HingeJoint2D leftThigh;
-    public HingeJoint2D leftCalf;
 
-    //Refrence to player limb motors
+    // Reference to player limb motors
     private JointMotor2D rightThighMotorRef;
-    private JointMotor2D rightCalfMotorRef;
     private JointMotor2D leftThighMotorRef;
-    private JointMotor2D leftCalfMotorRef;
 
-    //Set the speed the limbs move at
+    // Set the speed the limbs move at
     public float hingeSpeed = 40;
+
+    // Rocket boot force
+    public float boostForce = 100f;
 
     // Start is called before the first frame update
     void Start()
     {
-        //Set the motors to the limb motors
+        // Set the motors to the limb motors
         rightThighMotorRef = rightThigh.motor;
-        rightCalfMotorRef = rightCalf.motor;
         leftThighMotorRef = leftThigh.motor;
-        leftCalfMotorRef = leftCalf.motor;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Thigh controls
+        // Right Thigh controls
         if (Input.GetKey(KeyCode.Q))
         {
             rightThigh.useMotor = true;
-            leftThigh.useMotor = true;
             rightThighMotorRef.motorSpeed = -hingeSpeed;
-            leftThighMotorRef.motorSpeed = hingeSpeed;
             rightThigh.motor = rightThighMotorRef;
-            leftThigh.motor = leftThighMotorRef;
         }
         else if (Input.GetKey(KeyCode.W))
         {
             rightThigh.useMotor = true;
-            leftThigh.useMotor = true;
             rightThighMotorRef.motorSpeed = hingeSpeed;
-            leftThighMotorRef.motorSpeed = -hingeSpeed;
             rightThigh.motor = rightThighMotorRef;
+        }
+        else
+        {
+            rightThigh.useMotor = false;
+        }
+
+        // Left Thigh controls
+        if (Input.GetKey(KeyCode.E))
+        {
+            leftThigh.useMotor = true;
+            leftThighMotorRef.motorSpeed = -hingeSpeed;
+            leftThigh.motor = leftThighMotorRef;
+        }
+        else if (Input.GetKey(KeyCode.R))
+        {
+            leftThigh.useMotor = true;
+            leftThighMotorRef.motorSpeed = hingeSpeed;
             leftThigh.motor = leftThighMotorRef;
         }
         else
         {
-            rightThigh.useMotor =false;
             leftThigh.useMotor = false;
         }
 
-       
-        //Calf controls
-        if (Input.GetKey(KeyCode.E))
+        // Rocket boots
+        if (Input.GetKey(KeyCode.Space))
         {
-            rightCalf.useMotor = true;
-            leftCalf.useMotor = true;
-            rightCalfMotorRef.motorSpeed = -hingeSpeed;
-            leftCalfMotorRef.motorSpeed = hingeSpeed;
-            rightCalf.motor = rightCalfMotorRef;
-            leftCalf.motor = leftCalfMotorRef;
-        }
-        else if (Input.GetKey(KeyCode.R))
-        {
-            rightCalf.useMotor = true;
-            leftCalf.useMotor = true;
-            rightCalfMotorRef.motorSpeed = hingeSpeed;
-            leftCalfMotorRef.motorSpeed = -hingeSpeed;
-            rightCalf.motor = rightCalfMotorRef;
-            leftCalf.motor = leftCalfMotorRef;
-        }
-        else
-        {
-            rightCalf.useMotor = false;
-            leftCalf.useMotor = false;
-        }
+            // Get the direction opposite to the right thigh
+            Vector2 boostDirection = new Vector2(-rightThigh.transform.right.x, -rightThigh.transform.right.y);
 
+            // Apply the force
+            GetComponent<Rigidbody2D>().AddForce(boostDirection * boostForce);
+        }
     }
 }
