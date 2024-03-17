@@ -104,8 +104,36 @@ public class PlayerMovement : MonoBehaviour
 
     void RotateArm(HingeJoint2D arm, float angle)
     {
-        JointMotor2D motor = arm.motor;
-        motor.motorSpeed = -hingeSpeed * Mathf.Sign(angle - arm.transform.eulerAngles.z);
-        arm.motor = motor;
+        // Get the current arm angle
+        float currentAngle = arm.transform.eulerAngles.z;
+
+        // Calculate the difference between the desired angle and the current angle
+        float angleDifference = Mathf.DeltaAngle(currentAngle, angle);
+
+        // Adjust the angle if it needs to rotate more than 180 degrees
+        if (Mathf.Abs(angleDifference) > 180f)
+        {
+            angle = currentAngle + Mathf.Sign(angleDifference) * (360f - Mathf.Abs(angleDifference));
+        }
+
+        // Determine the direction to rotate based on the angle difference
+        float rotationDirection = Mathf.Sign(angle - currentAngle);
+
+        // Check if the arm is close enough to the target angle
+        float threshold = 5f; // Adjust this threshold as needed
+        if (Mathf.Abs(angleDifference) > threshold)
+        {
+            // Set the motor speed for the arm
+            JointMotor2D motor = arm.motor;
+            motor.motorSpeed = -rotationDirection * hingeSpeed;
+            arm.motor = motor;
+        }
+        else
+        {
+            // Stop the arm from rotating
+            JointMotor2D motor = arm.motor;
+            motor.motorSpeed = 0;
+            arm.motor = motor;
+        }
     }
 }
