@@ -698,9 +698,14 @@ MonoBehaviour:
   leftThigh: {fileID: 159598646}
   hingeSpeed: 500
   boostForce: 200
+  obj1Done: 0
+  obj2Done: 0
+  obj3Done: 0
   animRight: {fileID: 1112276429}
   animLeft: {fileID: 349677879}
   isBoosting: 0
+  balloonImage: {fileID: 298575464}
+  obj3Image: {fileID: 0}
 --- !u!1 &86370584
 GameObject:
   m_ObjectHideFlags: 0
