@@ -30,8 +30,12 @@ public class PlayerMovement : MonoBehaviour
     public Animator animLeft;
     public bool isBoosting = false;
 
-    
-    
+    //Obj 1
+    // Balloon Image GameObject
+    public GameObject ladyImage;
+    // UI Image GameObject
+    public GameObject obj1Image;
+
     //Obj 3
     // Balloon Image GameObject
     public GameObject balloonImage;
@@ -41,6 +45,8 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        balloonImage.SetActive(true);
+        obj3Image.SetActive(true);
         // Set the motors to the limb motors
         rightThighMotorRef = rightThigh.motor;
         leftThighMotorRef = leftThigh.motor;
@@ -131,13 +137,30 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionExit2D(Collision2D collision)
     {
+        if (collision.gameObject.name == "lady")
+        {
+            obj1Done = true;
+            ladyImage.SetActive(false);
+
+        }
+
         Debug.Log(collision.gameObject.name);
-        if (collision.gameObject.name == "Balloon") ;
+        if (collision.gameObject.name == "Balloon")
         {
             obj3Done = true;
             balloonImage.SetActive(false);
+            
+        }
+
+        if (obj1Done == true)
+        {
+            obj1Image.SetActive(false);
+        }
+
+        if (obj3Done == true)
+        {
             obj3Image.SetActive(false);
         }
     }
