@@ -9,12 +9,15 @@ public class UI : MonoBehaviour
     public Sprite hoverSprite1;
     public Sprite normalSprite2;
     public Sprite hoverSprite2;
+    public Sprite normalSprite3; // Add sprite for the third button
+    public Sprite hoverSprite3; // Add sprite for the third button
 
     // Reference to the buttons
     public Button button1;
     public Button button2;
+    public Button button3; // Add reference to the third button
 
-    //Controls images
+    // Controls images
     public Image image1;
     public Image image2;
     public float fadeDuration = 1f;
@@ -28,6 +31,9 @@ public class UI : MonoBehaviour
         // Add event listeners for button 2
         AddButtonEvents(button2, normalSprite2, hoverSprite2);
 
+        // Add event listeners for button 3
+        AddButtonEvents(button3, normalSprite3, hoverSprite3); // Add event listeners for the third button
+
         // Fade in both instructions
         yield return StartCoroutine(FadeImage(image1, true));
         yield return StartCoroutine(FadeImage(image2, true));
@@ -38,8 +44,6 @@ public class UI : MonoBehaviour
         // Fade out both images
         yield return StartCoroutine(FadeImage(image1, false));
         yield return StartCoroutine(FadeImage(image2, false));
-
-
     }
 
     void AddButtonEvents(Button button, Sprite normalSprite, Sprite hoverSprite)

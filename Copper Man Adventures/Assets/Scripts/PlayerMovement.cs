@@ -37,15 +37,21 @@ public class PlayerMovement : MonoBehaviour
         // Right Thigh controls
         if (Input.GetKey(KeyCode.Q))
         {
-            rightThigh.useMotor = true;
-            rightThighMotorRef.motorSpeed = -hingeSpeed;
-            rightThigh.motor = rightThighMotorRef;
+            if (!PauseMenu.isPaused)
+            {
+                rightThigh.useMotor = true;
+                rightThighMotorRef.motorSpeed = -hingeSpeed;
+                rightThigh.motor = rightThighMotorRef;
+            }
         }
         else if (Input.GetKey(KeyCode.W))
         {
-            rightThigh.useMotor = true;
-            rightThighMotorRef.motorSpeed = hingeSpeed;
-            rightThigh.motor = rightThighMotorRef;
+            if (!PauseMenu.isPaused)
+            {
+                rightThigh.useMotor = true;
+                rightThighMotorRef.motorSpeed = hingeSpeed;
+                rightThigh.motor = rightThighMotorRef;
+            }
         }
         else
         {
@@ -55,15 +61,21 @@ public class PlayerMovement : MonoBehaviour
         // Left Thigh controls
         if (Input.GetKey(KeyCode.E))
         {
-            leftThigh.useMotor = true;
-            leftThighMotorRef.motorSpeed = -hingeSpeed;
-            leftThigh.motor = leftThighMotorRef;
+            if (!PauseMenu.isPaused)
+            {
+                leftThigh.useMotor = true;
+                leftThighMotorRef.motorSpeed = -hingeSpeed;
+                leftThigh.motor = leftThighMotorRef;
+            }
         }
         else if (Input.GetKey(KeyCode.R))
         {
-            leftThigh.useMotor = true;
-            leftThighMotorRef.motorSpeed = hingeSpeed;
-            leftThigh.motor = leftThighMotorRef;
+            if (!PauseMenu.isPaused)
+            {
+                leftThigh.useMotor = true;
+                leftThighMotorRef.motorSpeed = hingeSpeed;
+                leftThigh.motor = leftThighMotorRef;
+            }
         }
         else
         {
@@ -73,12 +85,14 @@ public class PlayerMovement : MonoBehaviour
         // Rocket boots
         if (Input.GetKey(KeyCode.Space))
         {
-            // Get the direction opposite to the right thigh
-            Vector2 boostDirection = new Vector2(-rightThigh.transform.right.x, -rightThigh.transform.right.y);
+            if (!PauseMenu.isPaused) { 
+                // Get the direction opposite to the right thigh
+                Vector2 boostDirection = new Vector2(-rightThigh.transform.right.x, -rightThigh.transform.right.y);
 
-            // Apply the force
-            GetComponent<Rigidbody2D>().AddForce(boostDirection * boostForce);
-            isBoosting = true;
+                // Apply the force
+                GetComponent<Rigidbody2D>().AddForce(boostDirection * boostForce);
+                isBoosting = true;
+            }
         }
 
         if (Input.GetKeyUp(KeyCode.Space))
