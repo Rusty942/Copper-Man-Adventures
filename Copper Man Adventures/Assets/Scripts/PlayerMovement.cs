@@ -7,8 +7,10 @@ public class PlayerMovement : MonoBehaviour
     // Initially get the player limbs
     public HingeJoint2D rightThigh;
     public HingeJoint2D leftThigh;
-    public HingeJoint2D rightArm; // New arm
-    public HingeJoint2D leftArm;  // New arm
+
+    // Reference to player limb motors
+    private JointMotor2D rightThighMotorRef;
+    private JointMotor2D leftThighMotorRef;
 
     // Set the speed the limbs move at
     public float hingeSpeed = 40;
@@ -16,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     // Rocket boot force
     public float boostForce = 100f;
 
-    // Animator
+    //Animator
     public Animator animRight;
     public Animator animLeft;
     public bool isBoosting = false;
@@ -25,7 +27,8 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         // Set the motors to the limb motors
-        SetHingeMotors(rightArm, leftArm);
+        rightThighMotorRef = rightThigh.motor;
+        leftThighMotorRef = leftThigh.motor;
     }
 
     // Update is called once per frame
@@ -34,106 +37,66 @@ public class PlayerMovement : MonoBehaviour
         // Right Thigh controls
         if (Input.GetKey(KeyCode.Q))
         {
-            RotateThigh(rightThigh, -hingeSpeed);
+            rightThigh.useMotor = true;
+            rightThighMotorRef.motorSpeed = -hingeSpeed;
+            rightThigh.motor = rightThighMotorRef;
         }
         else if (Input.GetKey(KeyCode.W))
         {
-            RotateThigh(rightThigh, hingeSpeed);
+            rightThigh.useMotor = true;
+            rightThighMotorRef.motorSpeed = hingeSpeed;
+            rightThigh.motor = rightThighMotorRef;
+        }
+        else
+        {
+            rightThigh.useMotor = false;
         }
 
         // Left Thigh controls
         if (Input.GetKey(KeyCode.E))
         {
-            RotateThigh(leftThigh, -hingeSpeed);
+            leftThigh.useMotor = true;
+            leftThighMotorRef.motorSpeed = -hingeSpeed;
+            leftThigh.motor = leftThighMotorRef;
         }
         else if (Input.GetKey(KeyCode.R))
         {
-            RotateThigh(leftThigh, hingeSpeed);
+            leftThigh.useMotor = true;
+            leftThighMotorRef.motorSpeed = hingeSpeed;
+            leftThigh.motor = leftThighMotorRef;
+        }
+        else
+        {
+            leftThigh.useMotor = false;
         }
 
         // Rocket boots
         if (Input.GetKey(KeyCode.Space))
         {
+            // Get the direction opposite to the right thigh
+            Vector2 boostDirection = new Vector2(-rightThigh.transform.right.x, -rightThigh.transform.right.y);
+
             // Apply the force
-            GetComponent<Rigidbody2D>().AddForce(transform.right * boostForce);
+            GetComponent<Rigidbody2D>().AddForce(boostDirection * boostForce);
             isBoosting = true;
         }
-        else
+
+        if (Input.GetKeyUp(KeyCode.Space))
         {
             isBoosting = false;
         }
 
-        // Set animation parameters based on boosting state
-        animRight.SetBool("boosting", isBoosting);
-        animLeft.SetBool("boosting", isBoosting);
-
-        // Point arms towards mouse cursor
-        PointArmsTowardsMouse();
-    }
-
-    void SetHingeMotors(params HingeJoint2D[] hinges)
-    {
-        foreach (HingeJoint2D hinge in hinges)
+        if (isBoosting)
         {
-            JointMotor2D motor = hinge.motor;
-            motor.motorSpeed = 0; // Start with no speed
-            hinge.motor = motor;
+            animRight.SetBool("boosting", true);
+            animLeft.SetBool("boosting", true);
+        }
+
+        if (!isBoosting)
+        {
+            animRight.SetBool("boosting", false);
+            animLeft.SetBool("boosting", false);
         }
     }
 
-    void RotateThigh(HingeJoint2D thigh, float rotationSpeed)
-    {
-        JointMotor2D motor = thigh.motor;
-        motor.motorSpeed = rotationSpeed;
-        thigh.motor = motor;
-    }
-
-    void PointArmsTowardsMouse()
-    {
-        // Get the direction towards the mouse cursor
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 direction = (mousePosition - transform.position).normalized;
-
-        // Calculate the angle
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-        // Set the motor speed for the arms
-        RotateArm(rightArm, angle);
-        RotateArm(leftArm, angle);
-    }
-
-    void RotateArm(HingeJoint2D arm, float angle)
-    {
-        // Get the current arm angle
-        float currentAngle = arm.transform.eulerAngles.z;
-
-        // Calculate the difference between the desired angle and the current angle
-        float angleDifference = Mathf.DeltaAngle(currentAngle, angle);
-
-        // Adjust the angle if it needs to rotate more than 180 degrees
-        if (Mathf.Abs(angleDifference) > 180f)
-        {
-            angle = currentAngle + Mathf.Sign(angleDifference) * (360f - Mathf.Abs(angleDifference));
-        }
-
-        // Determine the direction to rotate based on the angle difference
-        float rotationDirection = Mathf.Sign(angle - currentAngle);
-
-        // Check if the arm is close enough to the target angle
-        float threshold = 5f; // Adjust this threshold as needed
-        if (Mathf.Abs(angleDifference) > threshold)
-        {
-            // Set the motor speed for the arm
-            JointMotor2D motor = arm.motor;
-            motor.motorSpeed = -rotationDirection * hingeSpeed;
-            arm.motor = motor;
-        }
-        else
-        {
-            // Stop the arm from rotating
-            JointMotor2D motor = arm.motor;
-            motor.motorSpeed = 0;
-            arm.motor = motor;
-        }
-    }
 }
