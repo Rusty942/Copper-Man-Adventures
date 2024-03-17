@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -18,10 +19,24 @@ public class PlayerMovement : MonoBehaviour
     // Rocket boot force
     public float boostForce = 100f;
 
+    //Rigid boy reference
+    Rigidbody2D _rb;
+    public bool obj1Done = false;
+    public bool obj2Done = false;
+    public bool obj3Done = false;
+
     //Animator
     public Animator animRight;
     public Animator animLeft;
     public bool isBoosting = false;
+
+    
+    
+    //Obj 3
+    // Balloon Image GameObject
+    public GameObject balloonImage;
+    // UI Image GameObject
+    public GameObject obj3Image;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +44,9 @@ public class PlayerMovement : MonoBehaviour
         // Set the motors to the limb motors
         rightThighMotorRef = rightThigh.motor;
         leftThighMotorRef = leftThigh.motor;
+
+        //Set rigid body
+        _rb = gameObject.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -113,4 +131,14 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log(collision.gameObject.name);
+        if (collision.gameObject.name == "Balloon") ;
+        {
+            obj3Done = true;
+            balloonImage.SetActive(false);
+            obj3Image.SetActive(false);
+        }
+    }
 }
